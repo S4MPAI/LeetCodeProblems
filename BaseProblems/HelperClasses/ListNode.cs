@@ -11,15 +11,15 @@ namespace BaseProblems.HelperClasses
         public int val;
         public ListNode next;
 
-        public ListNode(int x)
+        public ListNode(int val)
         {
-            val = x;
+            this.val = val;
             next = null;
         }
 
-        public ListNode(int x, ListNode next = null)
+        public ListNode(int val = 0, ListNode next = null)
         {
-            val = x;
+            this.val = val;
             this.next = next;
         }
     }

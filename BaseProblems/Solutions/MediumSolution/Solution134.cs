@@ -10,25 +10,33 @@ namespace BaseProblems.Solutions.MediumSolution
     {
         public int CanCompleteCircuit(int[] gas, int[] cost)
         {
-            var gasTank = gas[0];
-            var startGasCost = cost[0];
-            var startStation = 0;
+            var sumGas = 0;
+            var sumCost = 0;
 
-            for (int i = 1; i < gas.Length; i++)
+            for (var i = 0; i < gas.Length; i++)
             {
-                gasTank += gas[i];
-
-                if (gasTank - startGasCost > gasTank - cost[i])
-                {
-                    startStation = i;
-                    gasTank -= startGasCost;
-                    startGasCost = cost[i];
-                }
-                else
-                    gasTank -= cost[i];
+                sumGas += gas[i];
+                sumCost += cost[i];
             }
 
-            return gasTank - startGasCost >= 0 ? startStation : -1;
+            if (sumCost > sumGas)
+                return -1;
+
+            var current = 0;
+            var startPos = 0;
+
+            for (var i = 0; i < gas.Length; i++)
+            {
+                current += gas[i] - cost[i];
+
+                if (current < 0)
+                {
+                    startPos = i + 1;
+                    current = 0;
+                }
+            }
+
+            return startPos;
         }
     }
 }
