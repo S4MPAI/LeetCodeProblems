@@ -1,49 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace BaseProblems.Solutions.MediumSolution;
 
-namespace BaseProblems.Solutions.MediumSolution
+public class Solution15
 {
-    public class Solution15
+    public IList<IList<int>> ThreeSum(int[] nums)
     {
-        public IList<IList<int>> ThreeSum(int[] nums)
+        Array.Sort(nums);
+        var result = new List<IList<int>>();
+
+        for (var i = 0; i < nums.Length - 2; i++)
         {
-            Array.Sort(nums);
-            var result = new List<IList<int>>();
+            if (nums[i] > 0)
+                break;
+            if (i > 0 && nums[i] == nums[i - 1])
+                continue;
 
-            for (int i = 0; i < nums.Length - 2; i++)
+            var left = i + 1;
+            var right = nums.Length - 1;
+
+            while (left < right)
             {
-                if (nums[i] > 0)
-                    break;
-                if (i > 0 && nums[i] == nums[i - 1])
-                    continue;
+                var sum = nums[i] + nums[left] + nums[right];
 
-                var left = i + 1;
-                var right = nums.Length - 1;
-
-                while (left < right)
+                if (sum == 0)
                 {
-                    int sum = nums[i] + nums[left] + nums[right];
-
-                    if (sum == 0)
-                    {
-                        result.Add(new List<int>() { nums[i], nums[left], nums[right] });
-                        while (left < right && nums[left] == nums[left + 1]) left++; 
-                        while (left < right && nums[right] == nums[right - 1]) right--; 
+                    result.Add(new List<int> { nums[i], nums[left], nums[right] });
+                    while (left < right && nums[left] == nums[left + 1])
                         left++;
+                    while (left < right && nums[right] == nums[right - 1])
                         right--;
-                    }
-                    else if (sum < 0)
-                        left++;
-                    else
-                        right--;
+                    left++;
+                    right--;
                 }
+                else if (sum < 0)
+                    left++;
+                else
+                    right--;
             }
-
-            return result;
         }
+
+        return result;
     }
 }
